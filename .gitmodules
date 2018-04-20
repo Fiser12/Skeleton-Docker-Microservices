@@ -1,3 +1,6 @@
 [submodule "CompositeUi"]
 	path = CompositeUi
 	url = https://github.com/Fiser12/CompositeUi-React-Microservice
+[submodule "App"]
+	path = App
+	url = https://github.com/Fiser12/Symfony-Api-Bounded-Context-Microservice.git
