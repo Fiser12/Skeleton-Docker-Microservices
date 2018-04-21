@@ -22,11 +22,11 @@ services:
 
   app-dev:
     container_name: symfony-app-dev
-    image: fiser/phpdddstandar-symfony-app:dev
+    # image: fiser/phpdddstandar-symfony-app:dev
 # For locale image deploy
-#    build:
-#      context: ../
-#      dockerfile: ./Docker/php/dev/Dockerfile
+    build:
+      context: ../
+      dockerfile: ./Docker/php/dev/Dockerfile
     volumes:
       - ../:/app
     networks:
@@ -38,12 +38,11 @@ services:
 
   nginx-dev:
     container_name: nginx-server-dev
-    image: fiser/phpdddstandar-nginx:dev
+    # image: fiser/phpdddstandar-nginx:dev
 # For locale image deploy
-#    build:
-#      context: nginx/dev
-#      dockerfile: Dockerfile
-
+    build:
+      context: nginx/dev
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
       - "8081:8081"

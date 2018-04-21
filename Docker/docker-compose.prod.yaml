@@ -25,11 +25,11 @@ services:
 
   app-prod:
     container_name: symfony-app-prod
-    image: fiser/phpdddstandar-symfony-app:latest
+    # image: fiser/phpdddstandar-symfony-app:latest
 # For locale image deploy
-#    build:
-#      context: ../
-#      dockerfile: ./Docker/php/prod/Dockerfile
+    build:
+      context: ../
+      dockerfile: ./Docker/php/prod/Dockerfile
     restart: always
     volumes:
       - app_data:/app:rw
@@ -48,11 +48,11 @@ services:
 
   nginx-prod:
     container_name: nginx-server-prod
-    image: fiser/phpdddstandar-nginx:latest
+    # image: fiser/phpdddstandar-nginx:latest
 # For locale image deploy
-#    build:
-#      context: nginx/prod
-#      dockerfile: Dockerfile
+    build:
+      context: nginx/prod
+      dockerfile: Dockerfile
     restart: always
     ports:
 # For locale image deploy
