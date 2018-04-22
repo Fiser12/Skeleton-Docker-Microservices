@@ -34,9 +34,6 @@ services:
     volumes:
       - app_data:/app:rw
       - ./volumes/log/prod/App:/app/App/var/logs
-      - ./volumes/cache/prod/App:/app/App/var/cache
-      - ./volumes/log/prod/CompositeUi:/app/CompositeUi/var/log
-      - ./volumes/cache/prod/CompositeUi:/app/CompositeUi/var/cache
     networks:
       crv_prod_network:
         aliases:
