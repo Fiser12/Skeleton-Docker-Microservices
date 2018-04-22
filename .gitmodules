@@ -4,3 +4,6 @@
 [submodule "App"]
 	path = App
 	url = https://github.com/Fiser12/Symfony-Api-Bounded-Context-Microservice.git
+[submodule "Images"]
+	path = Images
+	url = https://github.com/Fiser12/Images-Api-Bounded-Context-Microservice.git
