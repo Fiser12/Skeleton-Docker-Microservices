@@ -11,7 +11,7 @@
 parameters:
     database_host:                      ${database_host}
     database_port:                      ${database_port}
-    database_name:                      app
+    database_name:                      files
     database_user:                      ${database_user}
     database_password:                  ${database_password}
     database_server_version:            ${database_server_version}
