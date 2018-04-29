@@ -1,11 +1,11 @@
 FROM fiser/php-and-yarn:latest
 
 ADD . /app
-RUN chown -R www-data:www-data /app
 
 RUN chmod -R 777 /app
-RUN composer install -d /app/App --no-dev --no-interaction
+
 RUN composer install -d /app/Files --no-dev --no-interaction
+RUN composer install -d /app/App --no-dev --no-interaction
 
 CMD sed \
         -e "s/\${database_host}/${DB_HOST}/" \
@@ -43,7 +43,6 @@ CMD sed \
         -e "s/\${secret-compositeui}/${SECRET_KEY_COMPOSITE_UI}/" \
         -e "s/\${env}/prod/" \
         /app/Docker/php/files-parameters.yml.dist > /app/Files/parameters.yml  && \
-
         php /app/App/etc/bin/symfony-console doctrine:database:create --if-not-exists && \
         php /app/App/etc/bin/symfony-console do:mi:mi -v --no-interaction --allow-no-migration && \
         php /app/Files/etc/bin/symfony-console doctrine:database:create --if-not-exists && \

@@ -34,6 +34,8 @@ services:
     volumes:
       - app_data:/app:rw
       - ./volumes/log/prod/App:/app/App/var/logs
+      - ./volumes/log/prod/Files:/app/Files/var/logs
+      - ./volumes/files/prod:/app/Files/private
     networks:
       crv_prod_network:
         aliases:

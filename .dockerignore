@@ -24,6 +24,7 @@
 !App/var/sessions/dev/.gitkeep
 !App/var/sessions/prod/.gitkeep
 /App/vendor
+/Files/vendor
 /App/src/App/Infrastructure/Ui/Assets/.eslintrc.js
 /App/src/App/Infrastructure/Ui/Assets/.stylelintrc.js
 /Docker/volumes/*
