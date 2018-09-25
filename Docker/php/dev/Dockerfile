@@ -1,4 +1,16 @@
-FROM fiser/php-and-yarn:latest
+FROM php:7.2-fpm-alpine
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN composer --version
+
+# Set your timezone here
+RUN rm /etc/localtime
+RUN ln -s /usr/share/zoneinfo/Europe/Madrid /etc/localtime
+RUN "date"
+
+# Run docker-php-ext-install for available extensions
+RUN docker-php-ext-configure intl \
+&& docker-php-ext-install pdo pdo_mysql opcache intl
 
 # install xdebug
 RUN pecl install xdebug
