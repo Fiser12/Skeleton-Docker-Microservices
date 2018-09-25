@@ -1,5 +1,33 @@
-FROM fiser/php-and-yarn:latest
+FROM php:7.1-fpm
 
+RUN apt-get update \
+	&& apt-get install -y \
+		zip \
+		unzip \
+		vim \
+		wget \
+		curl \
+		git \
+		mysql-client \
+		moreutils \
+		dnsutils \
+		zlib1g-dev \
+		libicu-dev \
+		libmemcached-dev \
+		g++ \
+&& rm -rf /var/lib/apt/lists/*
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN composer --version
+
+# Set your timezone here
+RUN rm /etc/localtime
+RUN ln -s /usr/share/zoneinfo/Europe/Madrid /etc/localtime
+RUN "date"
+
+# Run docker-php-ext-install for available extensions
+RUN docker-php-ext-configure intl \
+&& docker-php-ext-install pdo pdo_mysql opcache intl
 ADD . /app
 
 RUN chmod -R 777 /app
