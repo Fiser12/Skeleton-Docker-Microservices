@@ -9,8 +9,11 @@ RUN ln -s /usr/share/zoneinfo/Europe/Madrid /etc/localtime
 RUN "date"
 
 # Run docker-php-ext-install for available extensions
-RUN docker-php-ext-configure intl \
-&& docker-php-ext-install pdo pdo_mysql opcache intl
+RUN apk update && apk add zlib-dev icu-dev g++ 
+RUN apk --no-cache add shadow
+
+RUN docker-php-ext-install pdo pdo_mysql opcache intl
+RUN docker-php-ext-configure intl
 
 # install xdebug
 RUN pecl install xdebug

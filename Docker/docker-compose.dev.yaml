@@ -26,13 +26,13 @@ services:
 # For locale image deploy
     build:
       context: ../
-      dockerfile: ./Docker/php/dev/Dockerfile
+      dockerfile: ./Docker/app/dev/Dockerfile
     volumes:
       - ../:/app
     networks:
       crv_dev_network:
         aliases:
-          - php
+          - app
     env_file:
       - ./.env
 
