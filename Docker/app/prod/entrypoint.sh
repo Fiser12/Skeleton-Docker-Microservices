@@ -1,19 +1,4 @@
-FROM fiser/symfony-microservice-dockerfile-base:php-7.2-alpine
-
-# Set your timezone here
-RUN rm /etc/localtime
-RUN ln -s /usr/share/zoneinfo/Europe/Madrid /etc/localtime
-RUN "date"
-
-ADD ./App /app/App
-
-RUN chmod -R 777 /app/App
-
-RUN composer install -d /app/App --no-dev --no-interaction
-
-COPY ./Docker/app/prod/entrypoint.sh /usr/local/bin/
-
-CMD sed \
+sed \
         -e "s/\${database_host}/${DB_HOST}/" \
         -e "s/\${database_port}/${DB_PORT}/" \
         -e "s/\${database_name}/${DB_DATABASE}/" \
@@ -30,5 +15,4 @@ CMD sed \
         -e "s/\${secret-app}/${SECRET_KEY_APP}/" \
         -e "s/\${secret-compositeui}/${SECRET_KEY_COMPOSITE_UI}/" \
         -e "s/\${env}/prod/" \
-        /app/App/env-parameters.yml > /app/App/parameters.yml  && \
-php-fpm -F
+        /app/App/env-parameters.yml  > /app/App/parameters.yml

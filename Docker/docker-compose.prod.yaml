@@ -43,6 +43,23 @@ services:
     depends_on:
       - db-prod
 
+  compositeui-prod:
+    container_name: compositeui-prod
+    # image: fiser/phpdddstandar-symfony-app:latest
+# For locale image deploy
+    build:
+      context: ../
+      dockerfile: ./Docker/compositeui/prod/Dockerfile
+    restart: always
+    volumes:
+      - app_data:/app:rw
+    networks:
+      crv_prod_network:
+        aliases:
+          - composite-ui
+    env_file:
+      - ./.env
+
   nginx-prod:
     container_name: nginx-server-prod
     # image: fiser/phpdddstandar-nginx:latest
@@ -62,7 +79,7 @@ services:
       - ./volumes/log/prod/Nginx:/var/log/nginx
     depends_on:
       - app-prod
-
+      - compositeui-prod
     networks:
       crv_prod_network:
         aliases:

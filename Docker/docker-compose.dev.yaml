@@ -28,11 +28,25 @@ services:
       context: ../
       dockerfile: ./Docker/app/dev/Dockerfile
     volumes:
-      - ../:/app
+      - ../Composite:/app
     networks:
       crv_dev_network:
         aliases:
           - app
+    env_file:
+      - ./.env
+
+  compositeui-dev:
+    container_name: compositeui-dev
+    build:
+      context: ../
+      dockerfile: ./Docker/compositeui/dev/Dockerfile
+    volumes:
+      - ../:/app
+    networks:
+      crv_dev_network:
+        aliases:
+          - composite-ui
     env_file:
       - ./.env
 
