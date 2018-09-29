@@ -16,3 +16,4 @@ sed \
         -e "s/\${secret-compositeui}/${SECRET_KEY_COMPOSITE_UI}/" \
         -e "s/\${env}/prod/" \
         /app/App/env-parameters.yml  > /app/App/parameters.yml
+exec "$@"
