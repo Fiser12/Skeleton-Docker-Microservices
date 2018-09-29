@@ -20,33 +20,14 @@ services:
     ports:
       - "3307:3306"
 
-  app-dev:
-    container_name: symfony-app-dev
-    # image: fiser/phpdddstandar-symfony-app:dev
-# For locale image deploy
-    build:
-      context: ../
-      dockerfile: ./Docker/app/dev/Dockerfile
-    volumes:
-      - ../Composite:/app
-    networks:
-      crv_dev_network:
-        aliases:
-          - app
-    env_file:
-      - ./.env
-
-  compositeui-dev:
-    container_name: compositeui-dev
-    build:
-      context: ../
-      dockerfile: ./Docker/compositeui/dev/Dockerfile
+  php:
+    image: php:7.2-fpm
     volumes:
       - ../:/app
     networks:
       crv_dev_network:
         aliases:
-          - composite-ui
+          - php
     env_file:
       - ./.env
 
