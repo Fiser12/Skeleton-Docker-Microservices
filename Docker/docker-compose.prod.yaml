@@ -32,7 +32,7 @@ services:
       dockerfile: ./Docker/app/prod/Dockerfile
     restart: always
     volumes:
-      - app_data:/app:rw
+      - app_data:/app/App:rw
       - ./volumes/log/prod/App:/app/App/var/logs
     networks:
       crv_prod_network:
@@ -52,7 +52,7 @@ services:
       dockerfile: ./Docker/compositeui/prod/Dockerfile
     restart: always
     volumes:
-      - app_data:/app:rw
+      - compositeui_data:/app/CompositeUi:rw
     networks:
       crv_prod_network:
         aliases:
@@ -75,11 +75,11 @@ services:
 #      - "80"
 #      - "81"
     volumes:
-      - app_data:/app:rw
+      - app_data:/app/App:rw
+      - compositeui_data:/app/CompositeUi:rw
       - ./volumes/log/prod/Nginx:/var/log/nginx
     depends_on:
       - app-prod
-      - compositeui-prod
     networks:
       crv_prod_network:
         aliases:
@@ -87,4 +87,6 @@ services:
 
 volumes:
     app_data:
+        driver: local
+    compositeui_data:
         driver: local
