@@ -25,7 +25,6 @@ services:
 
   app-prod:
     container_name: symfony-app-prod
-    # image: fiser/phpdddstandar-symfony-app:latest
 # For locale image deploy
     build:
       context: ../
@@ -45,12 +44,10 @@ services:
 
   compositeui-prod:
     container_name: compositeui-prod
-    # image: fiser/phpdddstandar-symfony-app:latest
 # For locale image deploy
     build:
       context: ../
       dockerfile: ./Docker/compositeui/prod/Dockerfile
-    restart: always
     volumes:
       - compositeui_data:/app/CompositeUi:rw
     networks:
@@ -62,7 +59,6 @@ services:
 
   nginx-prod:
     container_name: nginx-server-prod
-    # image: fiser/phpdddstandar-nginx:latest
 # For locale image deploy
     build:
       context: nginx/prod
