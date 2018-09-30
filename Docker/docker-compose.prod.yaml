@@ -19,13 +19,10 @@ services:
         aliases:
           - mysql
     ports:
-# For locale image deploy
       - "3306:3306"
-#      - "3306"
 
   app-prod:
     container_name: symfony-app-prod
-# For locale image deploy
     build:
       context: ../
       dockerfile: ./Docker/app/prod/Dockerfile
@@ -44,7 +41,6 @@ services:
 
   compositeui-prod:
     container_name: compositeui-prod
-# For locale image deploy
     build:
       context: ../
       dockerfile: ./Docker/compositeui/prod/Dockerfile
@@ -59,17 +55,13 @@ services:
 
   nginx-prod:
     container_name: nginx-server-prod
-# For locale image deploy
     build:
       context: ../
       dockerfile: ./Docker/nginx/prod/Dockerfile
     restart: always
     ports:
-# For locale image deploy
       - "80:80"
       - "81:81"
-#      - "80"
-#      - "81"
     volumes:
       - app_data:/app/App:rw
       - compositeui_data:/app/CompositeUi:rw
