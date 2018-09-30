@@ -1,0 +1,74 @@
+version: '3.0'
+
+networks:
+  crv_prod_network:
+    driver: bridge
+
+services:
+  db-prod:
+    container_name: mysql-prod
+    image: mysql:5.7.17
+    restart: always
+    env_file:
+      - ./.env
+    volumes:
+      - ./volumes/mysql/prod/database:/var/lib/mysql
+      - ./volumes/mysql/prod/conf:/etc/mysql/conf.d
+    networks:
+      crv_prod_network:
+        aliases:
+          - mysql
+    ports:
+     - "3306"
+
+  app-prod:
+    container_name: symfony-app-prod
+    image: fiser/base-docker-microservices:app-prod
+    restart: always
+    volumes:
+      - app_data:/app/App:rw
+      - ./volumes/log/prod/App:/app/App/var/logs
+    networks:
+      crv_prod_network:
+        aliases:
+          - app
+    env_file:
+      - ./.env
+    depends_on:
+      - db-prod
+
+  compositeui-prod:
+    container_name: compositeui-prod
+    image: fiser/base-docker-microservices:compositeui-prod
+    volumes:
+      - compositeui_data:/app/CompositeUi:rw
+    networks:
+      crv_prod_network:
+        aliases:
+          - composite-ui
+    env_file:
+      - ./.env
+
+  nginx-prod:
+    container_name: nginx-server-prod
+    image: fiser/base-docker-microservices:nginx-prod
+    restart: always
+    ports:
+     - "80"
+     - "81"
+    volumes:
+      - app_data:/app/App:rw
+      - compositeui_data:/app/CompositeUi:rw
+      - ./volumes/log/prod/Nginx:/var/log/nginx
+    depends_on:
+      - app-prod
+    networks:
+      crv_prod_network:
+        aliases:
+          - nginx
+
+volumes:
+    app_data:
+        driver: local
+    compositeui_data:
+        driver: local
