@@ -33,8 +33,6 @@ services:
 
   nginx-dev:
     container_name: nginx-server-dev
-    # image: fiser/phpdddstandar-nginx:dev
-# For locale image deploy
     build:
       context: ../
       dockerfile: ./Docker/nginx/dev/Dockerfile
