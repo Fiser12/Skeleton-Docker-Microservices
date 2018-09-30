@@ -36,8 +36,8 @@ services:
     # image: fiser/phpdddstandar-nginx:dev
 # For locale image deploy
     build:
-      context: nginx/dev
-      dockerfile: Dockerfile
+      context: ../
+      dockerfile: ./Docker/nginx/dev/Dockerfile
     ports:
       - "8080:80"
     volumes:

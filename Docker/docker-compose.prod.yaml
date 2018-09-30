@@ -61,8 +61,8 @@ services:
     container_name: nginx-server-prod
 # For locale image deploy
     build:
-      context: nginx/prod
-      dockerfile: Dockerfile
+      context: ../
+      dockerfile: ./Docker/nginx/prod/Dockerfile
     restart: always
     ports:
 # For locale image deploy
