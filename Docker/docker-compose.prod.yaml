@@ -6,20 +6,19 @@ networks:
 
 services:
   db-prod:
-    container_name: mysql-prod
-    image: mysql:5.7.17
+    container_name: mongodb-prod
+    image: mongo:4.1.3
     restart: always
     env_file:
       - ./.env
     volumes:
-      - ./volumes/mysql/prod/database:/var/lib/mysql
-      - ./volumes/mysql/prod/conf:/etc/mysql/conf.d
+      - ./volumes/mongo/prod/database:/data/db
     networks:
       crv_prod_network:
         aliases:
-          - mysql
+          - mongo
     ports:
-      - "3306:3306"
+      - "27017:27017"
 
   app-prod:
     container_name: symfony-app-prod
