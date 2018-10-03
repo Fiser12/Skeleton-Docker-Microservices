@@ -18,7 +18,7 @@ services:
         aliases:
           - mongo
     ports:
-      - "27017:27017"
+      - "27018:27017"
 
   php:
     build:
@@ -30,8 +30,6 @@ services:
       crv_dev_network:
         aliases:
           - php
-    env_file:
-      - ./.env
 
   nginx-dev:
     container_name: nginx-server-dev
