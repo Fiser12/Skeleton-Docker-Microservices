@@ -49,7 +49,7 @@ build:
 	@rsync --ignore-existing Docker/.env.dist Docker/.env && \
 	        chmod -R 777 App/var && \
 	        docker-compose -f Docker/docker-compose.$(ENV).yaml down && \
-        	docker-compose -f Docker/docker-compose.$(ENV).yaml build --pull --no-cache && \
+        	docker-compose -f Docker/docker-compose.$(ENV).yaml build --pull && \
             docker-compose -f Docker/docker-compose.$(ENV).yaml up -d
 
 composer-install-all:
