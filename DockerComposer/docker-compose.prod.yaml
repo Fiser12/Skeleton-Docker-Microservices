@@ -12,7 +12,7 @@ services:
     env_file:
       - ../Docker/db/prod/.env
     volumes:
-      -  ../Docker/volumes/mongo/prod/database:/data/db
+      - ../Docker/volumes/mongo/prod/database:/data/db
     networks:
       crv_prod_network:
         aliases:

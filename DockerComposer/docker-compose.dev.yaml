@@ -10,9 +10,9 @@ services:
     image: mongo:4.1.3
     restart: always
     env_file:
-      - ./.env
+      - ../Docker/db/dev/.env
     volumes:
-      - ./volumes/mongo/dev/database:/data/db
+      - ../Docker/volumes/mongo/dev/database:/data/db
     networks:
       crv_dev_network:
         aliases:
@@ -42,7 +42,7 @@ services:
       - "8080:80"
     volumes:
       - ../.:/app
-      - ./volumes/log/dev/Nginx:/var/log/nginx
+      - ../Docker/volumes/log/dev/Nginx:/var/log/nginx
     networks:
       crv_dev_network:
         aliases:
