@@ -11,4 +11,4 @@
 !/volumes/.gitkeep
 !volumes/mysql/prod/conf/mysql.conf
 !volumes/mysql/dev/conf/mysql.conf
-/.env
+.env

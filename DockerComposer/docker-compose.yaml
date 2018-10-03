@@ -10,15 +10,15 @@ services:
     image: mongo:4.1.3
     restart: always
     env_file:
-      - ./.env
+      - ../Docker/db/prod/.env
     volumes:
-      - ./volumes/mongo/prod/database:/data/db
+      - ../Docker/volumes/mongo/prod/database:/data/db
     networks:
       crv_prod_network:
         aliases:
           - mongo
     ports:
-      - "27017:27017"
+      - 27017
 
   app-prod:
     container_name: symfony-app-prod
@@ -28,13 +28,13 @@ services:
     restart: always
     volumes:
       - app_data:/app/App:rw
-      - ./volumes/log/prod/App:/app/App/var/logs
+      -  ../Docker/volumes/log/prod/App:/app/App/var/logs
     networks:
       crv_prod_network:
         aliases:
           - app
     env_file:
-      - ./.env
+      - ../Docker/app/prod/.env
     depends_on:
       - db-prod
 
@@ -50,7 +50,7 @@ services:
         aliases:
           - composite-ui
     env_file:
-      - ./.env
+      - ../Docker/compositeui/prod/.env
 
   nginx-prod:
     container_name: nginx-server-prod
@@ -59,14 +59,16 @@ services:
       dockerfile: ./Docker/nginx/prod/Dockerfile
     restart: always
     ports:
-      - "80:80"
-      - "81:81"
+      - "80"
+      - "81"
     volumes:
       - app_data:/app/App:rw
       - compositeui_data:/app/CompositeUi:rw
-      - ./volumes/log/prod/Nginx:/var/log/nginx
+      - ../Docker/volumes/log/prod/Nginx:/var/log/nginx
     depends_on:
       - app-prod
+    env_file:
+      - ../Docker/nginx/prod/.env
     networks:
       crv_prod_network:
         aliases:
