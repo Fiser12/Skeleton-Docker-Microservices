@@ -9,7 +9,7 @@ ADD ./App /app/App
 
 RUN chmod -R 777 /app/App
 
-#RUN composer install -d /app/App --no-dev --no-interaction
+RUN composer install -d /app/App --no-dev --no-interaction
 
 COPY ./Docker/app/prod/entrypoint.sh /
 RUN chmod +x /entrypoint.sh
