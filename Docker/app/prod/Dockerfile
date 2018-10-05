@@ -13,6 +13,7 @@ RUN composer install -d /app/App --no-dev --no-interaction
 
 COPY ./Docker/app/prod/entrypoint.sh /
 RUN chmod +x /entrypoint.sh
+RUN rm /app/App/.env /app/App/.env.dist
 
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 CMD ["php-fpm"]

@@ -28,6 +28,7 @@
 /CompositeUi/node_modules/*
 /CompositeUi/build/*
 
+.env
 .git
 .gitignore
 Makefile

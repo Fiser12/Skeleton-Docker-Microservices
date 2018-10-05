@@ -30,6 +30,8 @@ services:
       crv_dev_network:
         aliases:
           - php
+    env_file:
+    - ../Docker/app/dev/.env
 
   nginx-dev:
     container_name: nginx-server-dev
@@ -45,3 +47,5 @@ services:
       crv_dev_network:
         aliases:
           - nginx
+    env_file:
+    - ../Docker/nginx/dev/.env
