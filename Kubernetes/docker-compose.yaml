@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3'
 
 networks:
   crv_prod_network:
@@ -18,13 +18,11 @@ services:
         aliases:
           - mongo
     ports:
-      - 27017
+      - "27017:27017"
 
   app-prod:
     container_name: symfony-app-prod
-    build:
-      context: ../
-      dockerfile: ./Docker/app/prod/Dockerfile
+    image: fiser/base-docker-microservices:composite-prod
     restart: always
     volumes:
       - app_data:/app/App:rw
@@ -34,15 +32,13 @@ services:
         aliases:
           - app
     env_file:
-      - ../Docker/app/prod/.env
+      - .env
     depends_on:
       - db-prod
 
   compositeui-prod:
     container_name: compositeui-prod
-    build:
-      context: ../
-      dockerfile: ./Docker/compositeui/prod/Dockerfile
+    image: fiser/base-docker-microservices:composite-prod
     volumes:
       - compositeui_data:/app/CompositeUi:rw
     networks:
@@ -50,17 +46,15 @@ services:
         aliases:
           - composite-ui
     env_file:
-      - ../Docker/compositeui/prod/.env
+      - .env
 
   nginx-prod:
     container_name: nginx-server-prod
-    build:
-      context: ../
-      dockerfile: ./Docker/nginx/prod/Dockerfile
+    image: fiser/base-docker-microservices:nginx-prod
     restart: always
     ports:
-      - "80"
-      - "81"
+      - "80:80"
+      - "81:81"
     volumes:
       - app_data:/app/App:rw
       - compositeui_data:/app/CompositeUi:rw
@@ -68,7 +62,7 @@ services:
     depends_on:
       - app-prod
     env_file:
-      - ../Docker/nginx/prod/.env
+      - .env
     networks:
       crv_prod_network:
         aliases:

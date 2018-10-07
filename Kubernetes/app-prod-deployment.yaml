@@ -1,0 +1,44 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: app-prod
+  name: app-prod
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: app-prod
+    spec:
+      containers:
+      - env:
+        - name: APP_ENV
+          valueFrom:
+            configMapKeyRef:
+              key: APP_ENV
+              name: app-prod-env
+        image: fiser/base-docker-microservices:composite-prod
+        name: symfony-app-prod
+        resources: {}
+        volumeMounts:
+        - mountPath: /app/App
+          name: app-data
+        - mountPath: /app/App/var/logs
+          name: app-prod-claim1
+      restartPolicy: Always
+      volumes:
+      - name: app-data
+        persistentVolumeClaim:
+          claimName: app-data
+      - name: app-prod-claim1
+        persistentVolumeClaim:
+          claimName: app-prod-claim1
+status: {}
