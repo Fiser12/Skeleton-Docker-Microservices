@@ -24,7 +24,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: APP_ENV
-              name: db-prod-Docker-db-prod--env
+              name: db-prod-env
         image: mongo:4.1.3
         name: mongodb-prod
         ports:

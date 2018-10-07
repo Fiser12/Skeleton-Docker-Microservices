@@ -5,5 +5,5 @@ kind: ConfigMap
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: db-prod-Docker-db-prod--env
-  name: db-prod-Docker-db-prod--env
+    io.kompose.service: db-prod-env
+  name: db-prod-env
