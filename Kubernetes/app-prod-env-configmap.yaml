@@ -3,7 +3,4 @@ data:
   APP_ENV: HOWIFHBAVAFIOF672FNDKFGAJjJjeq2nN
 kind: ConfigMap
 metadata:
-  creationTimestamp: null
-  labels:
-    io.kompose.service: app-prod-env
   name: app-prod-env
