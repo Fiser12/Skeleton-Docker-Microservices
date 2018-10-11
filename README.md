@@ -60,10 +60,8 @@ For deploy in dev or prod mode the project have a makefile with the needed comma
 - [x] Automatize deploy of dev
 - [x] Automatize database preparation with migrations when you deploy
 - [X] Production enviroment build
-- [ ] Production enviroment deploy
-- [ ] Test enviroment with PHPSpec and Docker
-- [ ] Test enviroment with Behat and selenium tests
-- [ ] Paralelize the tests with docker in multiple instances
-- [ ] Microservices separation using Docker, Nginx and Symfony applications
+- [ ] Production enviroment deploy with Kubernetes
+- [ ] Istio microservice comunication
+- [X] Microservices separation using Docker, Nginx and Symfony applications
 
 You have more information of this objetives in Projects section of Github Page
