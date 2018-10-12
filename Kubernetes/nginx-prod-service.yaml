@@ -20,7 +20,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: nginx-prod-service
+  name: nginx-prod
   namespace: default
   labels:
     app: nginx-prod
