@@ -53,7 +53,6 @@ services:
     restart: always
     ports:
       - "80:80"
-      - "81:81"
     volumes:
       - compositeui_data:/app/CompositeUi:rw
       - ../Docker/volumes/log/prod/Nginx:/var/log/nginx

@@ -21,7 +21,7 @@ services:
       - "27017:27017"
 
   app-prod:
-    container_name: symfony-app-prod
+    container_name: app-prod
     build:
       context: ../
       dockerfile: ./Docker/app/prod/Dockerfile
@@ -59,7 +59,6 @@ services:
     restart: always
     ports:
       - "80:80"
-      - "81:81"
     volumes:
       - compositeui_data:/app/CompositeUi:rw
       - ../Docker/volumes/log/prod/Nginx:/var/log/nginx

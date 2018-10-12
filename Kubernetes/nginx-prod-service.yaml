@@ -2,7 +2,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: app-prod-service
+  name: app-prod
   namespace: default
   labels:
     app: app-prod

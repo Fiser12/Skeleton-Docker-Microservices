@@ -20,7 +20,9 @@ spec:
               key: APP_ENV
               name: app-prod-env
         image: fiser/base-docker-microservices:app-prod
-        name: symfony-app-prod
+        ports:
+        - containerPort: 9000
+        name: app-prod
         resources: {}
         volumeMounts:
         - mountPath: /app/App/var/logs
