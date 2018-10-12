@@ -45,7 +45,6 @@ spec:
         volumeMounts:
         - mountPath: /app/CompositeUi
           name: compositeui-data
-      restartPolicy: Always
       volumes:
       - name: compositeui-data
         persistentVolumeClaim:
