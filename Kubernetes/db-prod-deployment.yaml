@@ -7,13 +7,10 @@ spec:
   selector:
     matchLabels:
       app: db-prod
-  strategy:
-    type: Recreate
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        io.kompose.service: db-prod
+        app: db-prod
     spec:
       containers:
       - env:

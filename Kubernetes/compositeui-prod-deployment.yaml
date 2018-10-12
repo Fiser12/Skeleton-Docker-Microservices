@@ -3,8 +3,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: compositeui-prod
-  labels:
-    run: compositeui-prod
 spec:
   type: NodePort
   ports:
@@ -25,14 +23,14 @@ metadata:
   labels:
     app: compositeui-prod
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: compositeui-prod
   template:
     metadata:
       labels:
-        run: compositeui-prod
+        app: compositeui-prod
     spec:
       containers:
       - env:

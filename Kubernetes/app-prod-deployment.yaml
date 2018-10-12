@@ -10,7 +10,7 @@ spec:
   template:
     metadata:
       labels:
-        io.kompose.service: app-prod
+        app: app-prod
     spec:
       containers:
       - env:
