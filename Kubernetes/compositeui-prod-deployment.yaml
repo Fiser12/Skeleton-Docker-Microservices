@@ -13,7 +13,7 @@ spec:
     protocol: TCP
     name: http
   - port: 443
-    protocol: TCPcompositeui-prod-env
+    protocol: TCP
     name: https
   selector:
     run: compositeui-prod

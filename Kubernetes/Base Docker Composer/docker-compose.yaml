@@ -25,7 +25,6 @@ services:
     image: fiser/base-docker-microservices:composite-prod
     restart: always
     volumes:
-      - app_data:/app/App:rw
       -  ../Docker/volumes/log/prod/App:/app/App/var/logs
     networks:
       crv_prod_network:
@@ -56,7 +55,6 @@ services:
       - "80:80"
       - "81:81"
     volumes:
-      - app_data:/app/App:rw
       - compositeui_data:/app/CompositeUi:rw
       - ../Docker/volumes/log/prod/Nginx:/var/log/nginx
     depends_on:
@@ -69,7 +67,5 @@ services:
           - nginx
 
 volumes:
-    app_data:
-        driver: local
     compositeui_data:
         driver: local

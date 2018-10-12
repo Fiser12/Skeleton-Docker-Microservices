@@ -20,3 +20,40 @@ spec:
     io.kompose.service: nginx-prod
 status:
   loadBalancer: {}
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: app-prod-service
+  namespace: default
+  labels:
+    app: app-prod
+spec:
+  ports:
+  - name: listener
+    protocol: TCP
+    port: 9000
+    targetPort: 9000
+  selector:
+    app: app-prod
+  type: NodePort
+  sessionAffinity: None
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-prod-service
+  namespace: default
+  labels:
+    app: nginx-prod
+spec:
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 80
+  selector:
+    app: nginx-prod
+  type: NodePort
+  sessionAffinity: None

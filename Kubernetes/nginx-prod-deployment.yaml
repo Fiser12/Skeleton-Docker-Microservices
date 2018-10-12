@@ -1,22 +1,15 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
-  labels:
-    io.kompose.service: nginx-prod
   name: nginx-prod
 spec:
   replicas: 1
   strategy:
     type: Recreate
+  selector:
+    matchLabels:
+      app: nginx-prod
   template:
-    metadata:
-      creationTimestamp: null
-      labels:
-        io.kompose.service: nginx-prod
     spec:
       containers:
       - env:
@@ -29,24 +22,17 @@ spec:
         name: nginx-server-prod
         ports:
         - containerPort: 80
-        - containerPort: 81
         resources: {}
         volumeMounts:
-        - mountPath: /app/App
-          name: app-data
         - mountPath: /app/CompositeUi
           name: compositeui-data
         - mountPath: /var/log/nginx
           name: nginx-prod-claim2
       restartPolicy: Always
       volumes:
-      - name: app-data
-        persistentVolumeClaim:
-          claimName: app-data
       - name: compositeui-data
         persistentVolumeClaim:
           claimName: compositeui-data
       - name: nginx-prod-claim2
         persistentVolumeClaim:
           claimName: nginx-prod-claim2
-status: {}

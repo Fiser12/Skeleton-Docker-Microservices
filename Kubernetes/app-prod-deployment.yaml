@@ -1,11 +1,12 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app-prod
 spec:
   replicas: 1
-  strategy:
-    type: Recreate
+  selector:
+    matchLabels:
+      app: app-prod
   template:
     metadata:
       labels:
@@ -18,19 +19,14 @@ spec:
             configMapKeyRef:
               key: APP_ENV
               name: app-prod-env
-        image: fiser/base-docker-microservices:composite-prod
+        image: fiser/base-docker-microservices:app-prod
         name: symfony-app-prod
         resources: {}
         volumeMounts:
-        - mountPath: /app/App
-          name: app-data
         - mountPath: /app/App/var/logs
           name: app-prod-claim1
       restartPolicy: Always
       volumes:
-      - name: app-data
-        persistentVolumeClaim:
-          claimName: app-data
       - name: app-prod-claim1
         persistentVolumeClaim:
           claimName: app-prod-claim1
