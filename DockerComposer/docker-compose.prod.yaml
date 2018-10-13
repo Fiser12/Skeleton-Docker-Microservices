@@ -60,7 +60,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - compositeui_data:/app/CompositeUi:rw
+      - compositeui_data:/volumes/CompositeUi:rw
       - ../Docker/volumes/log/prod/Nginx:/var/log/nginx
     depends_on:
       - app-prod
