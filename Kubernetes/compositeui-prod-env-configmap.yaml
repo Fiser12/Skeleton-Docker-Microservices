@@ -1,6 +1,0 @@
-apiVersion: v1
-data:
-  APP_ENV: HOWIFHBAVAFIOF672FNDKFGAJjJjeq2nN
-kind: ConfigMap
-metadata:
-  name: compositeui-prod-env

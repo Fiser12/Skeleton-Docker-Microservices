@@ -27,15 +27,10 @@ spec:
         - containerPort: 80
         resources: {}
         volumeMounts:
-        - mountPath: /app/CompositeUi
-          name: compositeui-data
         - mountPath: /var/log/nginx
           name: nginx-prod-claim2
       restartPolicy: Always
       volumes:
-      - name: compositeui-data
-        persistentVolumeClaim:
-          claimName: compositeui-data
       - name: nginx-prod-claim2
         persistentVolumeClaim:
           claimName: nginx-prod-claim2

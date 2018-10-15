@@ -37,20 +37,6 @@ services:
     depends_on:
       - db-prod
 
-  compositeui-prod:
-    container_name: compositeui-prod
-    build:
-      context: ../
-      dockerfile: ./Docker/compositeui/prod/Dockerfile
-    volumes:
-      - compositeui_data:/app/CompositeUi:rw
-    networks:
-      crv_prod_network:
-        aliases:
-          - composite-ui
-    env_file:
-      - ../Docker/compositeui/prod/.env
-
   nginx-prod:
     container_name: nginx-server-prod
     build:
@@ -60,7 +46,6 @@ services:
     ports:
       - "80:80"
     volumes:
-      - compositeui_data:/volumes/CompositeUi:rw
       - ../Docker/volumes/log/prod/Nginx:/var/log/nginx
     depends_on:
       - app-prod
@@ -70,7 +55,3 @@ services:
       crv_prod_network:
         aliases:
           - nginx
-
-volumes:
-    compositeui_data:
-        driver: local
