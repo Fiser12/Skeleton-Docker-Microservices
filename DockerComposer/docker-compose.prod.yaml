@@ -5,21 +5,49 @@ networks:
     driver: bridge
 
 services:
-  db-prod:
+  mongodb-prod:
     container_name: mongodb-prod
     image: mongo:4.1.3
     restart: always
     env_file:
-      - ../Docker/db/prod/.env
+      - ../Docker/mongodb/prod/.env
     volumes:
-      - ../Docker/volumes/mongo/prod/database:/data/db
+      - ../DockerComposer/volumes/mongo/prod/database:/data/db
     networks:
       crv_prod_network:
         aliases:
           - mongo
     ports:
       - "27017:27017"
-
+  mysql-prod:
+    container_name: mysql-prod
+    image: mysql:5.7
+    env_file:
+    - ../Docker/mysql/prod/.env
+    volumes:
+    - ../DockerComposer/volumes/mysql/prod/database:/var/lib/mysql
+    networks:
+      crv_prod_network:
+        aliases:
+        - mysql
+    ports:
+    - "3306:3306"
+  ecommerce-prod:
+    container_name: ecommerce-prod
+    build:
+      context: ../
+      dockerfile: ./Docker/ecommerce/prod/Dockerfile
+    restart: always
+    volumes:
+    -  ../DockerComposer/logs/prod/Ecommerce:/app/Ecommerce/var/logs
+    networks:
+      crv_prod_network:
+        aliases:
+        - ecommerce
+    env_file:
+    - ../Docker/ecommerce/prod/.env
+    depends_on:
+    - mysql-prod
   app-prod:
     container_name: app-prod
     build:
@@ -27,7 +55,7 @@ services:
       dockerfile: ./Docker/app/prod/Dockerfile
     restart: always
     volumes:
-      -  ../Docker/volumes/log/prod/App:/app/App/var/logs
+      -  ../DockerComposer/logs/prod/App:/app/App/var/logs
     networks:
       crv_prod_network:
         aliases:
@@ -35,8 +63,7 @@ services:
     env_file:
       - ../Docker/app/prod/.env
     depends_on:
-      - db-prod
-
+      - mongodb-prod
   nginx-prod:
     container_name: nginx-server-prod
     build:
@@ -46,9 +73,10 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ../Docker/volumes/log/prod/Nginx:/var/log/nginx
+      - ../DockerComposer/logs/prod/Nginx:/var/log/nginx
     depends_on:
       - app-prod
+      - ecommerce-prod
     env_file:
       - ../Docker/nginx/prod/.env
     networks:

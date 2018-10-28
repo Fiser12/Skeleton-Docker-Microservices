@@ -5,22 +5,35 @@ networks:
     driver: bridge
 
 services:
-  db-dev:
+  mongodb-dev:
     container_name: mongodb-dev
     image: mongo:4.1.3
     restart: always
     env_file:
-      - ../Docker/db/dev/.env
+      - ../Docker/mongodb/dev/.env
     volumes:
-      - ../Docker/volumes/mongo/dev/database:/data/db
+      - ../DockerComposer/volumes/mongo/dev/database:/data/db
     networks:
       crv_dev_network:
         aliases:
           - mongo
     ports:
       - "27018:27017"
-
+  mysql-dev:
+    container_name: mysql-dev
+    image: mysql:5.7
+    env_file:
+    - ../Docker/mysql/dev/.env
+    volumes:
+    - ../DockerComposer/volumes/mysql/dev/database:/var/lib/mysql
+    networks:
+      crv_dev_network:
+        aliases:
+        - mysql
+    ports:
+    - "3307:3306"
   php:
+    container_name: php
     build:
       context: ../
       dockerfile: ./Docker/app/dev/Dockerfile
@@ -32,6 +45,9 @@ services:
           - php
     env_file:
     - ../Docker/app/dev/.env
+    depends_on:
+    - mongodb-dev
+    - mysql-dev
 
   nginx-dev:
     container_name: nginx-server-dev
@@ -42,7 +58,9 @@ services:
       - "8080:80"
     volumes:
       - ../.:/app
-      - ../Docker/volumes/log/dev/Nginx:/var/log/nginx
+      - ../DockerComposer/logs/dev/Nginx:/var/log/nginx
+    depends_on:
+      - php
     networks:
       crv_dev_network:
         aliases:

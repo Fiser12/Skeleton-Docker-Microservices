@@ -24,9 +24,16 @@
 !App/var/sessions/dev/.gitkeep
 !App/var/sessions/prod/.gitkeep
 /App/vendor
-/Docker/volumes/*
+/DockerComposer/volumes/*
+/DockerComposer/logs/*
 /CompositeUi/node_modules/*
 /CompositeUi/build/*
+/Ecommerce/var/cache/*
+!Ecommerce/var/cache/.gitkeep
+/Ecommerce/vendor
+/Ecommerce/var/logs/*
+!Ecommerce/var/logs/.gitkeep
+/Ecommerce/var/bootstrap.php.cache
 
 .env
 .git
