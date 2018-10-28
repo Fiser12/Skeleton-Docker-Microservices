@@ -21,7 +21,7 @@ RUN chmod -R 777 /app/Ecommerce
 
 RUN composer install -d /app/Ecommerce --no-dev --no-interaction
 
-COPY ./Docker/app/prod/entrypoint.sh /
+COPY ./Docker/ecommerce/prod/entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 
 RUN /app/Ecommerce/etc/bash/generate_assets.sh
