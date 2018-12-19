@@ -28,12 +28,12 @@
 /DockerComposer/logs/*
 /CompositeUi/node_modules/*
 /CompositeUi/build/*
-/Ecommerce/var/cache/*
-!Ecommerce/var/cache/.gitkeep
-/Ecommerce/vendor
-/Ecommerce/var/logs/*
-!Ecommerce/var/logs/.gitkeep
-/Ecommerce/var/bootstrap.php.cache
+/ECommerce/var/cache/*
+!ECommerce/var/cache/.gitkeep
+/ECommerce/vendor
+/ECommerce/var/logs/*
+!ECommerce/var/logs/.gitkeep
+/ECommerce/var/bootstrap.php.cache
 
 .env
 .git

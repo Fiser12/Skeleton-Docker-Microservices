@@ -10,21 +10,21 @@ RUN apk add --update nodejs nodejs-npm yarn libpng libpng-dev
 RUN apk add --no-cache python make g++
 
 # Dependencies of php
-RUN docker-php-ext-install exif
 RUN docker-php-ext-install gd
+RUN docker-php-ext-install exif
 RUN docker-php-ext-enable exif
 RUN apk del libpng-dev
 
-ADD ./Ecommerce /app/Ecommerce
+ADD ./ECommerce /app/ECommerce
 
-RUN chmod -R 777 /app/Ecommerce
+RUN chmod -R 777 /app/ECommerce
 
-RUN composer install -d /app/Ecommerce --no-dev --no-interaction
+RUN php -d memory_limit=-1 /usr/local/bin/composer install -d /app/ECommerce --no-dev --no-interaction
 
 COPY ./Docker/ecommerce/prod/entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 
-RUN /app/Ecommerce/etc/bash/generate_assets.sh
+RUN /app/ECommerce/etc/bash/generate_assets.sh
 
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 CMD ["php-fpm"]
