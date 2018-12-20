@@ -40,7 +40,6 @@ services:
     build:
       context: ../
       dockerfile: ./Docker/ecommerce/prod/Dockerfile
-    restart: always
     volumes:
       -  ../:/app
       -  ../DockerComposer/logs/dev/ECommerce:/app/ECommerce/var/logs

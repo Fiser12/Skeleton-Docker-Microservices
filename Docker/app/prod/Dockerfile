@@ -1,4 +1,5 @@
 FROM fiser/symfony-microservice-dockerfile-base:php-7.2-alpine
+ENV APP_ENV prod
 
 # Set your timezone here
 RUN rm /etc/localtime
@@ -9,7 +10,7 @@ ADD ./App /app/App
 
 RUN chmod -R 777 /app/App
 
-RUN composer install -d /app/App --no-dev --no-interaction
+RUN php -d memory_limit=-1 /usr/local/bin/composer install -d /app/App --no-dev --no-interaction -v
 
 COPY ./Docker/app/prod/entrypoint.sh /
 RUN chmod +x /entrypoint.sh
