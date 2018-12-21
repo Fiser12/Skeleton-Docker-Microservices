@@ -9,7 +9,7 @@ services:
     container_name: mysql-prod
     image: mysql:8.0.13
     env_file:
-    - ../Docker/mysql/prod/.env
+      - ../.env.prod
     volumes:
     - ../DockerComposer/volumes/mysql/prod/database:/var/lib/mysql
     networks:
@@ -31,7 +31,7 @@ services:
         aliases:
         - ecommerce
     env_file:
-    - ../Docker/ecommerce/prod/.env
+      - ../.env.prod
     depends_on:
     - mysql-prod
   app-prod:
@@ -47,7 +47,7 @@ services:
         aliases:
           - app
     env_file:
-      - ../Docker/app/prod/.env
+      - ../.env.prod
   nginx-prod:
     container_name: nginx-server-prod
     build:
@@ -62,7 +62,7 @@ services:
       - app-prod
       - ecommerce-prod
     env_file:
-      - ../Docker/nginx/prod/.env
+      - ../.env.prod
     networks:
       crv_prod_network:
         aliases:

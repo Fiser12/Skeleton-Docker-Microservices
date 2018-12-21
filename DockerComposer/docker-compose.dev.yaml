@@ -9,7 +9,7 @@ services:
     container_name: mysql-dev
     image: mysql:8.0.13
     env_file:
-    - ../Docker/mysql/dev/.env
+    - ../.env.dev
     volumes:
       - ../DockerComposer/volumes/mysql/dev/database:/var/lib/mysql
       - ../DockerComposer/logs/dev/mysql:/var/log/Mysql
@@ -32,14 +32,14 @@ services:
         aliases:
           - php
     env_file:
-    - ../Docker/app/dev/.env
+      - ../.env.dev
     depends_on:
     - mysql-dev
   ecommerce-dev:
     container_name: ecommerce-dev
     build:
       context: ../
-      dockerfile: ./Docker/ecommerce/prod/Dockerfile
+      dockerfile: ./Docker/ecommerce/dev/Dockerfile
     volumes:
       -  ../:/app
       -  ../DockerComposer/logs/dev/ECommerce:/app/ECommerce/var/logs
@@ -48,7 +48,7 @@ services:
         aliases:
           - ecommerce
     env_file:
-      - ../Docker/ecommerce/prod/.env
+      - ../.env.dev
     depends_on:
       - mysql-dev
   nginx-dev:
@@ -68,4 +68,4 @@ services:
         aliases:
           - nginx
     env_file:
-    - ../Docker/nginx/dev/.env
+      - ../.env.dev
