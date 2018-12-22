@@ -3,7 +3,7 @@ ENV APP_ENV prod
 
 # Set your timezone here
 RUN rm /etc/localtime
-RUN ln -s /usr/share/zoneinfo/Europe/Madrid /etc/localtime
+RUN ln -s /usr/share/zoneinfo/Europe/London /etc/localtime
 RUN "date"
 
 # Yarn installation
@@ -15,6 +15,8 @@ RUN docker-php-ext-install gd
 RUN docker-php-ext-install exif
 RUN docker-php-ext-enable exif
 RUN apk del libpng-dev
+RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
+RUN echo 'date.timezone = Europe/London' >> /usr/local/etc/php/php.ini
 
 ADD ./ECommerce /app/ECommerce
 
