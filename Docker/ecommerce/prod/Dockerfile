@@ -20,15 +20,19 @@ RUN echo 'date.timezone = Europe/London' >> /usr/local/etc/php/php.ini
 
 ADD ./ECommerce /app/ECommerce
 
-RUN chmod -R 777 /app/ECommerce
-
 RUN php -d memory_limit=-1 /usr/local/bin/composer install -d /app/ECommerce --no-dev --no-interaction -v
 
-COPY ./Docker/ecommerce/prod/entrypoint.sh /
-RUN chmod +x /entrypoint.sh
 RUN rm /app/ECommerce/.env /app/ECommerce/.env.dist
 
+RUN chmod +x /app/ECommerce/etc/bash/generate_assets.sh
 RUN /app/ECommerce/etc/bash/generate_assets.sh
+RUN chown -R www-data:www-data /app/ECommerce
+RUN chmod -R 755 /app/ECommerce
 
-ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
-CMD ["php-fpm"]
+USER www-data
+
+CMD openssl genrsa -out /app/ECommerce/var/jwt/private.pem -aes256 -passout pass:${ECOMMERCE_JWT_PASSPHRASE} 4096 && \
+        openssl rsa -pubout -in /app/ECommerce/var/jwt/private.pem -out /app/ECommerce/var/jwt/public.pem -passin pass:${ECOMMERCE_JWT_PASSPHRASE} && \
+        php /app/ECommerce/etc/bin/symfony-console doctrine:database:create --if-not-exists && \
+        php /app/ECommerce/etc/bin/symfony-console do:mi:mi -v --no-interaction --allow-no-migration && \
+        php-fpm -F

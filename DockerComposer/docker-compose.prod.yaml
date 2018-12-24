@@ -25,7 +25,7 @@ services:
       dockerfile: ./Docker/ecommerce/prod/Dockerfile
     restart: always
     volumes:
-    -  ../DockerComposer/logs/prod/ECommerce:/app/ECommerce/var/logs
+    -  ../DockerComposer/logs/prod/ECommerce:/app/ECommerce/var/log
     networks:
       crv_prod_network:
         aliases:
@@ -41,7 +41,7 @@ services:
       dockerfile: ./Docker/app/prod/Dockerfile
     restart: always
     volumes:
-      -  ../DockerComposer/logs/prod/App:/app/App/var/logs
+      -  ../DockerComposer/logs/prod/App:/app/App/var/log
     networks:
       crv_prod_network:
         aliases:

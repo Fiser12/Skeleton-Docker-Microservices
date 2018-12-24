@@ -8,13 +8,14 @@ RUN "date"
 
 ADD ./App /app/App
 
-RUN chmod -R 777 /app/App
-
 RUN php -d memory_limit=-1 /usr/local/bin/composer install -d /app/App --no-dev --no-interaction -v
 
+RUN rm /app/App/.env /app/App/.env.dist
+
+RUN chown -R www-data:www-data /app/App
+RUN chmod -R 755 /app/App
 COPY ./Docker/app/prod/entrypoint.sh /
 RUN chmod +x /entrypoint.sh
-RUN rm /app/App/.env /app/App/.env.dist
 
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 CMD ["php-fpm"]

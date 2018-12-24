@@ -42,7 +42,7 @@ services:
       dockerfile: ./Docker/ecommerce/dev/Dockerfile
     volumes:
       -  ../:/app
-      -  ../DockerComposer/logs/dev/ECommerce:/app/ECommerce/var/logs
+      -  ../DockerComposer/logs/dev/ECommerce:/app/ECommerce/var/log
     networks:
       crv_dev_network:
         aliases:
