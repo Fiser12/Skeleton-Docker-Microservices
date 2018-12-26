@@ -37,6 +37,9 @@
 !ECommerce/var/sessions/.gitkeep
 /ECommerce/var/bootstrap.php.cache
 !ECommerce/var/jwt/.gitkeep
+/ECommerce/src/Infrastructure/Ui/Assets/node_modules
+/ECommerce/src/Infrastructure/Ui/Assets/assets
+/ECommerce/src/Infrastructure/Ui/Http/Symfony/bundles
 
 .env
 .git

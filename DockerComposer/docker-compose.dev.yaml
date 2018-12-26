@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.4'
 
 networks:
   crv_dev_network:
@@ -9,37 +9,42 @@ services:
     container_name: mysql-dev
     image: mysql:8.0.13
     env_file:
-    - ../.env.dev
+      - ../.env.dev
     volumes:
       - ../DockerComposer/volumes/mysql/dev/database:/var/lib/mysql
-      - ../DockerComposer/logs/dev/mysql:/var/log/Mysql
     networks:
       crv_dev_network:
         aliases:
-        - mysql
+          - mysql
     ports:
-    - "3307:3306"
-
-  php:
-    container_name: php
+      - "3307:3306"
+  app-dev:
+    container_name: app-dev
     build:
       context: ../
-      dockerfile: ./Docker/app/dev/Dockerfile
+      dockerfile: ./Docker/app/prod/Dockerfile
+    restart: always
     volumes:
-      - ../:/app
+      -  ../:/app
+      -  ../DockerComposer/logs/dev/App:/app/App/var/log
     networks:
       crv_dev_network:
         aliases:
-          - php
+          - app
     env_file:
       - ../.env.dev
     depends_on:
-    - mysql-dev
+      - mysql-dev
   ecommerce-dev:
     container_name: ecommerce-dev
     build:
       context: ../
-      dockerfile: ./Docker/ecommerce/dev/Dockerfile
+      dockerfile: ./Docker/nginx/prod/Dockerfile
+      target: ecommerce
+      args:
+        env: dev
+    restart: always
+    command: ["php-fpm", "-F"]
     volumes:
       -  ../:/app
       -  ../DockerComposer/logs/dev/ECommerce:/app/ECommerce/var/log
@@ -55,17 +60,21 @@ services:
     container_name: nginx-server-dev
     build:
       context: ../
-      dockerfile: ./Docker/nginx/dev/Dockerfile
+      dockerfile: ./Docker/nginx/prod/Dockerfile
+      target: nginx
+      args:
+        env: dev
+    restart: always
     ports:
       - "8080:80"
     volumes:
-      - ../.:/app
+      -  ../:/app
       - ../DockerComposer/logs/dev/Nginx:/var/log/nginx
     depends_on:
-      - php
+      - app-dev
+    env_file:
+      - ../.env.dev
     networks:
       crv_dev_network:
         aliases:
           - nginx
-    env_file:
-      - ../.env.dev

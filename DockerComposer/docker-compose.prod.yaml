@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.4'
 
 networks:
   crv_prod_network:
@@ -18,22 +18,6 @@ services:
         - mysql
     ports:
     - "3306:3306"
-  ecommerce-prod:
-    container_name: ecommerce-prod
-    build:
-      context: ../
-      dockerfile: ./Docker/ecommerce/prod/Dockerfile
-    restart: always
-    volumes:
-    -  ../DockerComposer/logs/prod/ECommerce:/app/ECommerce/var/log
-    networks:
-      crv_prod_network:
-        aliases:
-        - ecommerce
-    env_file:
-      - ../.env.prod
-    depends_on:
-    - mysql-prod
   app-prod:
     container_name: app-prod
     build:
@@ -48,11 +32,35 @@ services:
           - app
     env_file:
       - ../.env.prod
+    depends_on:
+      - mysql-prod
+  ecommerce-prod:
+    container_name: ecommerce-prod
+    build:
+      context: ../
+      dockerfile: ./Docker/nginx/prod/Dockerfile
+      target: ecommerce
+      args:
+        env: prod
+    restart: always
+    volumes:
+      -  ../DockerComposer/logs/prod/ECommerce:/app/ECommerce/var/log
+    networks:
+      crv_prod_network:
+        aliases:
+          - ecommerce
+    env_file:
+      - ../.env.prod
+    depends_on:
+      - mysql-prod
   nginx-prod:
     container_name: nginx-server-prod
     build:
       context: ../
       dockerfile: ./Docker/nginx/prod/Dockerfile
+      target: nginx
+      args:
+        env: prod
     restart: always
     ports:
       - "80:80"
@@ -60,7 +68,6 @@ services:
       - ../DockerComposer/logs/prod/Nginx:/var/log/nginx
     depends_on:
       - app-prod
-      - ecommerce-prod
     env_file:
       - ../.env.prod
     networks:
