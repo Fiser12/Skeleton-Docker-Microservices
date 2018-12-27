@@ -11,7 +11,8 @@ services:
     env_file:
       - ../.env.prod
     volumes:
-    - ../DockerComposer/volumes/mysql/prod/database:/var/lib/mysql
+      - ../DockerComposer/volumes/mysql/prod/database:/var/lib/mysql
+      - ../DockerComposer/logs/prod/mysql:/var/log/Mysql
     networks:
       crv_prod_network:
         aliases:
@@ -22,7 +23,7 @@ services:
     container_name: app-prod
     build:
       context: ../
-      dockerfile: ./Docker/app/prod/Dockerfile
+      dockerfile: ./Docker/app/Dockerfile
     restart: always
     volumes:
       -  ../DockerComposer/logs/prod/App:/app/App/var/log
@@ -38,7 +39,7 @@ services:
     container_name: ecommerce-prod
     build:
       context: ../
-      dockerfile: ./Docker/nginx/prod/Dockerfile
+      dockerfile: ./Docker/nginx/Dockerfile
       target: ecommerce
       args:
         env: prod
@@ -57,7 +58,7 @@ services:
     container_name: nginx-server-prod
     build:
       context: ../
-      dockerfile: ./Docker/nginx/prod/Dockerfile
+      dockerfile: ./Docker/nginx/Dockerfile
       target: nginx
       args:
         env: prod

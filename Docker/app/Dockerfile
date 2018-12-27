@@ -14,7 +14,7 @@ RUN rm /app/App/.env /app/App/.env.dist
 
 RUN chown -R www-data:www-data /app/App
 RUN chmod -R 755 /app/App
-COPY ./Docker/app/prod/entrypoint.sh /
+COPY ./Docker/app/entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
