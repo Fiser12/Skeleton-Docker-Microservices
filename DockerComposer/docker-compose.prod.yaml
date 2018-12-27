@@ -20,6 +20,7 @@ services:
     ports:
     - "3306:3306"
   app-prod:
+    image: fiser/base-docker-microservices:app
     container_name: app-prod
     build:
       context: ../
@@ -36,6 +37,7 @@ services:
     depends_on:
       - mysql-prod
   ecommerce-prod:
+    image: fiser/base-docker-microservices:ecommerce
     container_name: ecommerce-prod
     build:
       context: ../
@@ -55,6 +57,7 @@ services:
     depends_on:
       - mysql-prod
   nginx-prod:
+    image: fiser/base-docker-microservices:nginx
     container_name: nginx-server-prod
     build:
       context: ../

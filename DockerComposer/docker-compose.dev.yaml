@@ -21,9 +21,7 @@ services:
       - "3307:3306"
   app-dev:
     container_name: app-dev
-    build:
-      context: ../
-      dockerfile: ./Docker/app/Dockerfile
+    image: fiser/base-docker-microservices:app
     restart: always
     volumes:
       -  ../:/app
@@ -38,12 +36,7 @@ services:
       - mysql-dev
   ecommerce-dev:
     container_name: ecommerce-dev
-    build:
-      context: ../
-      dockerfile: ./Docker/nginx/Dockerfile
-      target: ecommerce
-      args:
-        env: dev
+    image: fiser/base-docker-microservices:ecommerce
     restart: always
     command: ["php-fpm", "-F"]
     volumes:
