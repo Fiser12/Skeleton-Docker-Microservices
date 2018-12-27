@@ -1,51 +1,74 @@
-version: '3.3'
+version: '3.4'
 
 networks:
   crv_dev_network:
     driver: bridge
 
 services:
-  db-dev:
-    container_name: mongodb-dev
-    image: mongo:4.1.3
-    restart: always
+  mysql-dev:
+    container_name: mysql-dev
+    image: mysql:8.0.13
     env_file:
-      - ../Docker/db/dev/.env
+      - ../.env.dev
     volumes:
-      - ../Docker/volumes/mongo/dev/database:/data/db
+      - ../DockerComposer/volumes/mysql/dev/database:/var/lib/mysql
+      - ../DockerComposer/logs/dev/mysql:/var/log/Mysql
     networks:
       crv_dev_network:
         aliases:
-          - mongo
+          - mysql
     ports:
-      - "27018:27017"
-
-  php:
-    build:
-      context: ../
-      dockerfile: ./Docker/app/dev/Dockerfile
+      - "3307:3306"
+  app-dev:
+    container_name: app-dev
+    image: fiser/base-docker-microservices:app
+    restart: always
     volumes:
-      - ../:/app
+      -  ../:/app
+      -  ../DockerComposer/logs/dev/App:/app/App/var/log
     networks:
       crv_dev_network:
         aliases:
-          - php
+          - app
     env_file:
-    - ../Docker/app/dev/.env
-
+      - ../.env.dev
+    depends_on:
+      - mysql-dev
+  ecommerce-dev:
+    container_name: ecommerce-dev
+    image: fiser/base-docker-microservices:ecommerce
+    restart: always
+    command: ["php-fpm", "-F"]
+    volumes:
+      -  ../:/app
+      -  ../DockerComposer/logs/dev/ECommerce:/app/ECommerce/var/log
+    networks:
+      crv_dev_network:
+        aliases:
+          - ecommerce
+    env_file:
+      - ../.env.dev
+    depends_on:
+      - mysql-dev
   nginx-dev:
     container_name: nginx-server-dev
     build:
       context: ../
-      dockerfile: ./Docker/nginx/dev/Dockerfile
+      dockerfile: ./Docker/nginx/Dockerfile
+      target: nginx
+      args:
+        env: dev
+    restart: always
     ports:
       - "8080:80"
     volumes:
-      - ../.:/app
-      - ../Docker/volumes/log/dev/Nginx:/var/log/nginx
+      -  ../:/app
+      - ../DockerComposer/logs/dev/Nginx:/var/log/nginx
+    depends_on:
+      - app-dev
+    env_file:
+      - ../.env.dev
     networks:
       crv_dev_network:
         aliases:
           - nginx
-    env_file:
-    - ../Docker/nginx/dev/.env
